@@ -50,7 +50,7 @@ if (slacktoken) {
         'elements': [
           {
             'type': 'mrkdwn',
-            'text': `No.${j} / ${array[j]}`
+            'text': `No.${j+1} / ${array[j]}`
           }
         ]
       },
