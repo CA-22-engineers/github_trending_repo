@@ -1,6 +1,6 @@
-import { sendMessage } from "./connect_slack.ts";
-import { scrapingRepo } from "./github.ts";
-import "https://deno.land/x/dotenv/load.ts";
+import { sendMessage } from './connect_slack.ts';
+import { scrapingRepo } from './github.ts';
+import 'https://deno.land/x/dotenv/load.ts';
 
 const array = await scrapingRepo()
 // const makeArray = (text: string) => {
@@ -27,30 +27,30 @@ const array = await scrapingRepo()
 // console.log(makeObject(array))
 const slacktoken = Deno.env.get('SLACK_TOKEN')
 if (slacktoken) {
-  await sendMessage(slacktoken, "#bot_test",
+  await sendMessage(slacktoken, '#bot_test',
     [
       {
-        type: "section",
+        type: 'section',
         text: {
-          type: "mrkdwn",
-          text: "*Github trending repositories*"
+          type: 'mrkdwn',
+          text: '*Github trending repositories*'
         }
       },
       {
-        type: "divider"
+        type: 'divider'
       },
     ]
   );
   // await sendMessage(slacktoken, "#bot_test", makeObject(array));
   for (let j = 0; j < 10; j++) {
-    await sendMessage(slacktoken, "#bot_test",
+    await sendMessage(slacktoken, '#bot_test',
     [
       {
-        "type": "context",
-        "elements": [
+        'type': 'context',
+        'elements': [
           {
-            "type": "mrkdwn",
-            "text": `No.${j} / ${array[j]}`
+            'type': 'mrkdwn',
+            'text': `No.${j} / ${array[j]}`
           }
         ]
       },

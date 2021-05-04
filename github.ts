@@ -1,10 +1,10 @@
-import { DOMParser } from 'https://deno.land/x/deno_dom/deno-dom-wasm.ts';
+import { DOMParser } from './deps.ts';
 
 const url = 'https://github.com/trending';
 
 let url_list: string[] = [];
 // let title_list: string[] = [];
-const url_prefix = "https://github.com/"
+const url_prefix = 'https://github.com/'
 const res = await fetch(url);
 const html = await res.text();
 const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -15,7 +15,7 @@ export const scrapingRepo = (): string[] => {
   const repositories = ref?.querySelectorAll('div>.Box-row>h1>a')
   if (repositories) {
     for(const repositoty of repositories) {
-      url_list.push(url_prefix + repositoty.textContent.replace("\n\n", "").replace(/\s+/g, "").trim())
+      url_list.push(url_prefix + repositoty.textContent.replace('\n\n', '').replace(/\s+/g, '').trim())
     }
   }
   return url_list
