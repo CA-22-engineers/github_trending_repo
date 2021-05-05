@@ -7,7 +7,7 @@ const makeArray = (i: number, text: string) => {
   return (
     {
       "type": "mrkdwn",
-      "text": `No${i+1} ${text}`
+      "text": `No${i+1} \n ${text}`
     }
   )
 }
