@@ -1,4 +1,4 @@
-export const sendMessage = async(token: string, channel: string, blocks: any) => {
+export const sendMessage = async(token: string, channel: string, blocks: string) => {
   const response = await fetch('https://slack.com/api/chat.postMessage', {
     method: 'POST',
     headers: {
@@ -11,6 +11,5 @@ export const sendMessage = async(token: string, channel: string, blocks: any) =>
       as_user: true,
     }),
   });
-
   return response;
 }

@@ -3,58 +3,45 @@ import { scrapingRepo } from './github.ts';
 import 'https://deno.land/x/dotenv/load.ts';
 
 const array = await scrapingRepo()
-// const makeArray = (text: string) => {
-//   return (
-//     {
-//       "type": "mrkdwn",
-//       "text": `${text}`
-//     }
-//   )
-// }
-// const makeObject = (array: string[]): any[] => {
-//   let elements: any[] = [];
-//   let box: any = {
-//     type: "context",
-//   };
-//   let blocks: any[] = [];
-//   for (let i = 0; i < array.length; i++) {
-//     elements?.push(makeArray(array[i]))
-//   }
-//   box.elements = elements
-//   blocks.push(box)
-//   return blocks
-// }
-// console.log(makeObject(array))
+const makeArray = (i: number, text: string) => {
+  return (
+    {
+      "type": "mrkdwn",
+      "text": `No${i+1} ${text}`
+    }
+  )
+}
+const makeObject = (array: string[]) => {
+  let fields: any[] = [];
+  let box: any = {
+    type: "section",
+  };
+  let blocks: any[] = [];
+  for (let i = 0; i < 10; i++) {
+    fields.push(makeArray(i, array[i]))
+  }
+  box.fields = fields
+  blocks.push(box)
+  return JSON.stringify(blocks)
+}
 const slacktoken = Deno.env.get('SLACK_TOKEN')
-if (slacktoken) {
-  await sendMessage(slacktoken, '#bot_test',
-    [
+const d = new Date();
+const y = d.getFullYear();
+const m = d.getMonth();
+const dt = d.getDate();
+const header = [
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: '*Github trending repositories*'
+          text: `*Github trending repositories*  /  ${y} ${m+1}/${dt}`
         }
       },
       {
         type: 'divider'
       },
     ]
-  );
-  // await sendMessage(slacktoken, "#bot_test", makeObject(array));
-  for (let j = 0; j < 10; j++) {
-    await sendMessage(slacktoken, '#bot_test',
-    [
-      {
-        'type': 'context',
-        'elements': [
-          {
-            'type': 'mrkdwn',
-            'text': `No.${j+1} / ${array[j]}`
-          }
-        ]
-      },
-    ]
-  );
-}
+if (slacktoken) {
+  await sendMessage(slacktoken, '#bot_test', JSON.stringify(header));
+  await sendMessage(slacktoken, "#bot_test", makeObject(array));
 }
