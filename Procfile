@@ -1,1 +1,1 @@
-web: deno run --allow-net --allow-read --allow-env --cached-only slack.ts
+web: deno run --allow-net --allow-read --allow-env --cached-only index.ts
